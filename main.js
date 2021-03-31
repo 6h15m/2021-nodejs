@@ -2,10 +2,10 @@ const http = require('http')
 const fs = require('fs')
 const url = require('url')
 
-function templateList(fileList){
+function templateList(fileList) {
     var list = '<ul>'
     var i = 0;
-    while (i < fileList.length){
+    while (i < fileList.length) {
         list = list + `<li><a href="/?id=${fileList[i]}">${fileList[i]}</a></li>`;
         i = i + 1;
     }
@@ -13,7 +13,7 @@ function templateList(fileList){
     return list;
 }
 
-function templateHTML(title, list, body){
+function templateHTML(title, list, body) {
     return `
           <!doctype html>
           <html lang="ko">
@@ -24,7 +24,7 @@ function templateHTML(title, list, body){
           <body>
             <h1><a href="/">WEB</a></h1>
             ${list}
-            
+            <a href="/create">create</a>
             ${body}
           </body>
           </html>
@@ -45,7 +45,6 @@ const app = http.createServer(function (request, response) {
                 response.writeHead(200)
                 response.end(template)
             })
-
         } else {
             fs.readdir('data/', function (err, data) {
                 let list = '<ul>'
@@ -62,6 +61,24 @@ const app = http.createServer(function (request, response) {
                 })
             })
         }
+    } else if (pathname === '/create') {
+        fs.readdir('./data', function (error, filelist) {
+            var title = 'WEB - create';
+            var list = templateList(filelist);
+            var template = templateHTML(title, list, `
+            <form action = "http://localhost:3000/process_create" method = "post">
+            <p><input type = "text" name = "title" placeholder="title"></p>
+            <p>
+                <textarea name = "description" placeholder="description"></textarea>
+            </p>
+            <p>
+                <input type = "submit">
+            </p>
+            </form>
+        `);
+            response.writeHead(200);
+            response.end(template);
+        })
     } else {
         response.writeHead(404)
         response.end('Not found')
