@@ -5,7 +5,7 @@ var path = require('path');
 var qs = require('querystring');
 const bodyParser = require('body-parser');
 var sanitizeHtml = require('sanitize-html');
-var compression = require('body-parser');
+var compression = require('compression');
 var template = require('./lib/template.js');
 
 app.use(bodyParser.urlencoded({extended: false}));
