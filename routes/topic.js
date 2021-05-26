@@ -3,7 +3,7 @@ var router = express.Router();
 var path = require('path');
 var fs = require('fs');
 var sanitizeHtml = require('sanitize-html');
-var template = require('./lib/template.js');
+var template = require('../lib/template.js');
 
 router.get('/create', function (request, response) {
     var title = 'WEB - create';
@@ -55,7 +55,7 @@ router.get('/update/:pageId', function (request, response) {
     });
 });
 
-app.post('/update_process', function (request, response) {
+router.post('/update_process', function (request, response) {
     var post = request.body;
     var id = post.id;
     var title = post.title;
