@@ -3,6 +3,8 @@ var app = express();
 var fs = require('fs');
 const bodyParser = require('body-parser');
 var compression = require('compression');
+var helmet = require('helmet');
+app.use(helmet());
 
 var indexRouter = require('./routes/index');
 var topicRouter = require('./routes/topic');
